@@ -23,7 +23,7 @@ school_dropdown_btn.click()
 time.sleep(3)
 
 # Click UMD for login
-umd_list_item = browser.find_element_by_xpath("/html/body/ng-include/div/div[4]/div/div[1]/div[2]/div[1]/div[2]/div/div/div/form/div[1]/div[1]/div/div/div/ul/li[1743]")
+umd_list_item = browser.find_element_by_xpath("/html/body/ng-include/div/div[4]/div/div[1]/div[2]/div[1]/div[2]/div/div/div/form/div[1]/div[1]/div/div/div/ul/li[1744]/a")
 umd_list_item.click()
 
 time.sleep(15)
