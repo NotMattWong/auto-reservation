@@ -1,7 +1,13 @@
 #!/usr/local/opt/python/bin/python3.7
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 import time
+import datetime
 
+# School Name
+school = 'university of maryland'
+
+# School Credentials
 dID = input("Directory ID:")
 pswd = input("Password:")
 UID = input("UID:")
@@ -14,7 +20,7 @@ options_.add_argument("user-data-dir=/Users/matthewwong/Library/Application Supp
 browser = webdriver.Chrome('/usr/local/bin/chromedriver', options=options_)
 browser.get('https://www.imleagues.com/spa/account/login')
 
-time.sleep(5)
+time.sleep(10)
 
 # Click Dropdown Menu
 school_dropdown_btn = browser.find_element_by_xpath("/html/body/ng-include/div/div[4]/div/div[1]/div[2]/div[1]/div[2]/div/div/div/form/div[1]/div[1]/div/div/button")
@@ -22,9 +28,10 @@ school_dropdown_btn.click()
 
 time.sleep(3)
 
-# Click UMD for login
-umd_list_item = browser.find_element_by_xpath("/html/body/ng-include/div/div[4]/div/div[1]/div[2]/div[1]/div[2]/div/div/div/form/div[1]/div[1]/div/div/div/ul/li[1744]/a")
-umd_list_item.click()
+# Type UMD and enter for login
+enter_school = browser.find_element_by_xpath("/html/body/ng-include/div/div[4]/div/div[1]/div[2]/div[1]/div[2]/div/div/div/form/div[1]/div[1]/div/div/div/div/input")
+enter_school.send_keys(school)
+enter_school.send_keys(Keys.ENTER)
 
 time.sleep(15)
 
@@ -34,8 +41,26 @@ reservation_link.click()
 
 time.sleep(7)
 
+# Date Picker
+def day(i):
+    switcher = {
+        0:"/html/body/div[3]/div[1]/div[11]/div/div[2]/div/div[1]/div[2]/div[1]/div/div[5]/week-calendar/div[1]/div[2]/div/div[9]",
+        1:"/html/body/div[3]/div[1]/div[11]/div/div[2]/div/div[1]/div[2]/div[1]/div/div[5]/week-calendar/div[1]/div[2]/div/div[10]",
+        2:"/html/body/div[3]/div[1]/div[11]/div/div[2]/div/div[1]/div[2]/div[1]/div/div[5]/week-calendar/div[1]/div[2]/div/div[11]",
+        3:"/html/body/div[3]/div[1]/div[11]/div/div[2]/div/div[1]/div[2]/div[1]/div/div[5]/week-calendar/div[1]/div[2]/div/div[12]",
+        4:"/html/body/div[3]/div[1]/div[11]/div/div[2]/div/div[1]/div[2]/div[1]/div/div[5]/week-calendar/div[1]/div[2]/div/div[13]",
+        5:"/html/body/div[3]/div[1]/div[11]/div/div[2]/div/div[1]/div[2]/div[1]/div/div[5]/week-calendar/div[1]/div[2]/div/div[14]",
+        6:"/html/body/div[3]/div[1]/div[11]/div/div[2]/div/div[1]/div[2]/div[1]/div/div[5]/week-calendar/div[1]/div[2]/div/div[8]",
+    }
+    return switcher.get(i, "Date Picker Messed Up")
+
+if(datetime.datetime.today().weekday() + 1 > 6):
+    currDay = -1
+else:
+    currDay = datetime.datetime.today().weekday()
+
 # Click on the next day
-tomorrow_page = browser.find_element_by_xpath("/html/body/div[3]/div[1]/div[11]/div/div[2]/div/div[1]/div[2]/div[1]/div/div[5]/week-calendar/div[1]/div[2]/div/div[11]")
+tomorrow_page = browser.find_element_by_xpath(day(currDay + 1))
 tomorrow_page.click()
 
 time.sleep(8)
